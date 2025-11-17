@@ -76,9 +76,9 @@ dependencies = [
   email = "sarahbx@redhat.com"
 
   [project.urls]
-  homepage = "https://github.com/RedHatQE/openshift-python-scale-utilities"
+  homepage = "https://github.com/redhat-vmeperf/openshift-python-scale-utilities"
   Download = "https://pypi.org/project/openshift-python-scale-utilities/"
-  "Bug Tracker" = "https://github.com/RedHatQE/openshift-python-scale-utilities/issues"
+  "Bug Tracker" = "https://github.com/redhat-vmeperf/openshift-python-scale-utilities/issues"
 
 
 [build-system]
