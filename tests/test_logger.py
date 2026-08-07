@@ -70,6 +70,9 @@ def setup_log_queue_listener(request):
                     "wah wah wah wah --- [DuplicateFilter: Last log `blah blah blah` repeated 9 times]",
                 ),
                 ("root", logging.CRITICAL, "you should hear this"),
+                ("basic", logging.WARNING, "hello world"),
+                ("basic", logging.WARNING, "hello world"),
+                ("basic", logging.WARNING, "hello world"),
             ],
             "file_expected": [
                 "root \x1b[32mINFO\x1b[0m blah blah blah",

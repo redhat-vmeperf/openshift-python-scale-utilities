@@ -6,8 +6,8 @@ from copy import deepcopy
 from pathlib import Path
 
 from ocp_resources.namespace import Namespace
-
 from ocp_resources.resource import get_client
+from timeout_sampler import TimeoutSampler
 from tests.utils import bash, get_crc_status
 
 
@@ -46,8 +46,7 @@ def crc_cluster(crc_dir, crc_status):
         return_code, _, _ = bash(command="./crc start", cwd=crc_dir)
         assert not return_code, "Error starting CRC"
 
-        os.environ["KUBECONFIG"] = os.path.join(Path.home(), ".crc/machines/crc/kubeconfig")
-        yield
+        yield os.path.join(Path.home(), ".crc/machines/crc/kubeconfig")
         return_code, _, _ = bash(command="./crc stop", cwd=crc_dir)
         assert not return_code, "Error stopping CRC"
 
@@ -56,27 +55,36 @@ def crc_cluster(crc_dir, crc_status):
         assert not return_code, "Error deleting CRC instance"
 
     elif crc_status["crcStatus"] == "Running":
-        yield
+        yield os.path.join(Path.home(), ".kube/config")
     else:
         pytest.fail(f"Invalid CRC status: {crc_status}")
 
 
 @pytest.fixture(scope="session")
 def running_crc_kubeconfig(crc_cluster):
-    return os.path.join(Path.home(), ".kube/config")
+    return crc_cluster
 
 
 @pytest.fixture(scope="session")
 def crc_admin_client(running_crc_kubeconfig):
     return get_client(
         config_file=running_crc_kubeconfig,
-        context="crc-admin",
+        context="crc-admin" if running_crc_kubeconfig.endswith(".kube/config") else None,
     )
 
 
 @pytest.fixture(scope="module")
 def namespace(crc_admin_client):
     with Namespace(name="test-namespace", client=crc_admin_client) as ns:
+        sa_resource = crc_admin_client.resources.get(api_version="v1", kind="ServiceAccount")
+        for _ in TimeoutSampler(
+            wait_timeout=30,
+            sleep=1,
+            func=sa_resource.get,
+            namespace=ns.name,
+            name="default",
+        ):
+            break
         yield ns
 
 
@@ -92,7 +100,7 @@ def crc_scale_admin_client(running_crc_kubeconfig, scale_client_configuration):
     return get_client(
         client_configuration=deepcopy(scale_client_configuration),
         config_file=running_crc_kubeconfig,
-        context="crc-admin",
+        context="crc-admin" if running_crc_kubeconfig.endswith(".kube/config") else None,
     )
 
 
@@ -101,5 +109,5 @@ def crc_scale_developer_client(running_crc_kubeconfig, scale_client_configuratio
     return get_client(
         client_configuration=deepcopy(scale_client_configuration),
         config_file=running_crc_kubeconfig,
-        context="crc-developer",
+        context="crc-developer" if running_crc_kubeconfig.endswith(".kube/config") else None,
     )
