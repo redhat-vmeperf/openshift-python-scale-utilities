@@ -49,7 +49,7 @@ dev = [ "ipdb~=0.13.13", "ipython~=9.16.1", "pytest-cov~=7.1.0" ]
 [project]
 name = "openshift-python-scale-utilities"
 requires-python = ">=3.12.0"
-version = "0.1.1.6"
+version = "0.1.1.7"
 description = "OpenShift Python Scale Utilities"
 readme = "README.md"
 license = "Apache-2.0"
@@ -59,7 +59,7 @@ classifiers = [
   "Operating System :: OS Independent"
 ]
 dependencies = [
-  "openshift-python-wrapper~=11.0.139",
+  "openshift-python-wrapper~=11.0.141",
   "openshift-python-utilities~=6.0.16",
   "pytest~=9.1.1",
   "pytest-order~=1.5.0",

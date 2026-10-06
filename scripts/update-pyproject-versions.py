@@ -24,12 +24,12 @@ def trim_version(*, resolved, depth):
 
 def make_versioned_replacer(lock_versions):
     def replace(match):
-        pkg_display = match.group(index=1)
-        old_ver = match.group(index=2)
+        pkg_display = match.group(1)
+        old_ver = match.group(2)
         depth = len(old_ver.split("."))
         resolved = lock_versions.get(pkg_display.lower())
         if resolved is None:
-            return match.group(index=0)
+            return match.group(0)
         new_ver = trim_version(resolved=resolved, depth=depth)
         return f'"{pkg_display}~={new_ver}"'
 
@@ -41,11 +41,11 @@ def add_bare_versions(*, text, lock_versions):
 
     def replace_bare(match):
         if not in_deps:
-            return match.group(index=0)
-        pkg_display = match.group(index=1)
+            return match.group(0)
+        pkg_display = match.group(1)
         resolved = lock_versions.get(pkg_display.lower())
         if resolved is None:
-            return match.group(index=0)
+            return match.group(0)
         depth = min(len(resolved.split(".")), 3)
         new_ver = trim_version(resolved=resolved, depth=depth)
         return f'"{pkg_display}~={new_ver}"'
