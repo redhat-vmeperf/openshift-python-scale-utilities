@@ -1,6 +1,9 @@
 # Makefile
 
+.PHONY: test dep-update
+
 test:
+	uv sync --frozen --dev
 	uv run pytest tests -o "addopts="
 
 dep-update:
