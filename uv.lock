@@ -2009,12 +2009,12 @@ wheels = [
 
 [[package]]
 name = "python-simple-logger"
-version = "2.0.19"
+version = "2.0.20"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "colorlog" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/f1/5b/e97b2209a7de9763c50ef073620630aff8ffc546206e519f1d4330293f9c/python_simple_logger-2.0.19.tar.gz", hash = "sha256:1a26cf71da4bea84ac3093a90a2476555a8dde5cce69c8271143eea7675ca9e1", size = 9953, upload-time = "2026-02-26T09:36:04.764Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/af/55/fb781312df5d7ed9d1fec3b1c33402b3e85950ce728c0a9d7bc063c5ac0b/python_simple_logger-2.0.20.tar.gz", hash = "sha256:17a18a6860e479c9733f56bd8d100fb4d3e4ba40e204ce666b7d3dee75ebabc2", size = 9955, upload-time = "2026-11-03T09:57:01.233Z" }
 
 [[package]]
 name = "python-slugify"
