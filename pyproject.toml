@@ -44,7 +44,7 @@ warn_unused_ignores = true
 packages = [ "ocp_scale_utilities" ]
 
 [dependency-groups]
-dev = [ "ipdb~=0.13.13", "ipython~=9.16.1", "pytest-cov~=7.1.0" ]
+dev = [ "ipdb~=0.13.13", "ipython>=9.16.1,<9.19.0", "pytest-cov~=7.1.0" ]
 
 [project]
 name = "openshift-python-scale-utilities"
